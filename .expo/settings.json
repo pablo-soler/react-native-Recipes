@@ -1,0 +1,8 @@
+{
+  "urlRandomness": "gm-zks",
+  "hostType": "lan",
+  "lanType": "ip",
+  "dev": true,
+  "minify": false,
+  "https": false
+}
