@@ -9,6 +9,7 @@ import { Icon, Badge } from "react-native-elements";
 import { c, p1, h1 } from "../StylesColors.js";
 import RecipeList from "../components/RecipeList.js";
 import * as Animatable from "react-native-animatable";
+//hello hello prueba
 
 //Ejemplo consulta:
 //https://api.edamam.com/search?q=null&app_id=40bcce87&app_key=0077e7f685cd2a845ce597a0927a7e40&from=0&to=2
