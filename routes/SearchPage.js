@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {BASE_URL, APP_ID, APP_KEY} from "../helpers/axiosConfig";
 import {
   View,
   TextInput,
@@ -9,7 +10,7 @@ import { Icon, Badge } from "react-native-elements";
 import { c, p1, h1 } from "../StylesColors.js";
 import RecipeList from "../components/RecipeList.js";
 import * as Animatable from "react-native-animatable";
-//hello hello prueba
+import axios from "axios";
 
 //Ejemplo consulta:
 //https://api.edamam.com/search?q=null&app_id=40bcce87&app_key=0077e7f685cd2a845ce597a0927a7e40&from=0&to=2
@@ -66,12 +67,26 @@ const SearchPage = ({ navigation }) => {
     totalTime: 70.0,
   };
   //ejemplo recipelist
-  const recipes = [];
-  for (let i = 0; i < 20; i++) {
-    recipes[i] = recipe;
-  }
+  // const recipes = [];
+  // for (let i = 0; i < 20; i++) {
+  //   recipes[i] = recipe;
+  // }
   const [query, setQuery] = useState();
   const [queriesList, setQueriesList] = useState([]);
+  const [recipes, setRecipies] = useState([]);
+
+  const getRecipies = (query) => {
+    console.log(query)
+    axios.get(`${BASE_URL}/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`)
+      .then(function (res) {
+        console.log('------------------------------------------------')
+        // res.data.hits.map( h => console.log(h.recipe.label));
+        setRecipies(res.data.hits);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }
 
   const addQuerytoList = () => {
     if (query) {
@@ -80,6 +95,7 @@ const SearchPage = ({ navigation }) => {
       setQueriesList(currentQueriesList);
     }
 
+    getRecipies(query.toLowerCase());
     setQuery("");
   };
 

@@ -7,15 +7,18 @@ const RecipeList = ({recipes}) => {
   let recipes2 = [];
   let h1 = 0;
   let h2 = 0;
-  for (let i = 0; i < recipes.length; i++) {
+  console.log(recipes);
+
+  recipes.map(( (r, i) => {
+    console.log(r.recipe)
     let H = 100 + 40 * Math.floor(Math.random() * 3);
     if (h1 <= h2) {
       h1 += H;
       recipes1.push(
         <RecipeCard
           key={i}
-          image={recipes[i].image}
-          title={recipes[i].label + " " + i}
+          image={r.recipe.image}
+          title={r.recipe.label}
           H={H}
           styles={{ flexGrow: H }}
         />
@@ -25,14 +28,15 @@ const RecipeList = ({recipes}) => {
       recipes2.push(
         <RecipeCard
           key={i}
-          image={recipes[i].image}
-          title={recipes[i].label + " " + i}
+          image={r.recipe.image}
+          title={r.recipe.label}
           H={H}
           styles={{ flexGrow: H }}
         />
       );
     }
-  }
+  }));
+  
   return (
     <ScrollView
       contentContainerStyle={{

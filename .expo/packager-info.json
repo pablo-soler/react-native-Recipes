@@ -2,8 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 14708,
-  "expoServerNgrokUrl": "https://gm-zks.anonymous.react-native-recipes.exp.direct",
-  "packagerNgrokUrl": "https://packager.gm-zks.anonymous.react-native-recipes.exp.direct",
-  "ngrokPid": 3248
+  "packagerPid": 2160,
+  "expoServerNgrokUrl": "https://kd-m8c.anonymous.react-native-recipes.exp.direct",
+  "packagerNgrokUrl": "https://packager.kd-m8c.anonymous.react-native-recipes.exp.direct",
+  "ngrokPid": 2424,
+  "webpackServerPort": null
 }
