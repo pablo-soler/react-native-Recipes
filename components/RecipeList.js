@@ -7,18 +7,15 @@ const RecipeList = ({recipes}) => {
   let recipes2 = [];
   let h1 = 0;
   let h2 = 0;
-  console.log(recipes);
 
   recipes.map(( (r, i) => {
-    console.log(r.recipe)
     let H = 100 + 40 * Math.floor(Math.random() * 3);
     if (h1 <= h2) {
       h1 += H;
       recipes1.push(
         <RecipeCard
           key={i}
-          image={r.recipe.image}
-          title={r.recipe.label}
+          recipe={r.recipe}
           H={H}
           styles={{ flexGrow: H }}
         />
@@ -28,8 +25,7 @@ const RecipeList = ({recipes}) => {
       recipes2.push(
         <RecipeCard
           key={i}
-          image={r.recipe.image}
-          title={r.recipe.label}
+          recipe={r.recipe}
           H={H}
           styles={{ flexGrow: H }}
         />
