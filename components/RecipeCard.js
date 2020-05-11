@@ -1,18 +1,22 @@
 import React from "react";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
-import {c, h3} from "../StylesColors.js";
+import { c, h3 } from "../StylesColors.js";
 import {
   Text,
   View,
   StyleSheet,
   Image,
-  TouchableNativeFeedback,
+  TouchableHighlight,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 const RecipeCard = ({ image, title, H }) => {
   return (
-    <TouchableNativeFeedback>
+    <TouchableHighlight
+      style={styles.touchable}
+      underlayColor="#ccc"
+      onPress={() => {}}
+    >
       <Animatable.View style={styles.card} animation="fadeInDown">
         <Image
           source={{ uri: image }}
@@ -24,9 +28,9 @@ const RecipeCard = ({ image, title, H }) => {
             borderRadius: radius - 5,
           }}
         />
-        <Text  style={h3}>{title}</Text>
+        <Text style={h3}>{title}</Text>
       </Animatable.View>
-    </TouchableNativeFeedback>
+    </TouchableHighlight>
   );
 };
 
@@ -37,6 +41,9 @@ const radius = 20;
 const pd = 10;
 
 const styles = StyleSheet.create({
+  touchable: {
+    borderRadius: radius,
+  },
   card: {
     position: "relative",
     width: W,
