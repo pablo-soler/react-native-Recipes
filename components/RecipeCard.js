@@ -31,10 +31,9 @@ import * as Animatable from "react-native-animatable";
           <Text style={h3}>{title}</Text>
         </Animatable.View>
       </TouchableNativeFeedback>*/
-console.log()
 const RecipeCard = ({ recipe, H }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  console.log(recipe)
+  //console.log(recipe)
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -131,6 +130,9 @@ const radius = 20;
 const pd = 10;
 
 const styles = StyleSheet.create({
+  touchable: {
+    borderRadius: radius,
+  },
   card: {
     position: "relative",
     width: W,
