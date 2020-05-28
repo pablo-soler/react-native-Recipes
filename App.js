@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Footer from "./components/Footer";
 import { View, ActivityIndicator } from "react-native";
 import { useFonts } from "@use-expo/font";
+import { RecipesProvider } from './model/RecipesModel';
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -20,11 +21,13 @@ const App = () => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Footer style={{ flex: 1 }} />
-      </NavigationContainer>
-    </View>
+    <RecipesProvider>
+      <View style={{ flex: 1 }}>
+        <NavigationContainer>
+          <Footer style={{ flex: 1 }} />
+        </NavigationContainer>
+      </View>
+    </RecipesProvider>
   );
 };
 
