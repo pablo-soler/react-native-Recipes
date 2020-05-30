@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import { c, h3 } from "../StylesColors.js";
 import {
@@ -11,9 +11,11 @@ import {
   Modal,
   TouchableHighlight
 } from "react-native";
-import { Icon } from "react-native-elements";
-
 import * as Animatable from "react-native-animatable";
+import { Icon } from "react-native-elements";
+import { RecipesContext } from "../model/RecipesModel.js";
+import { observer } from "mobx-react";
+
 /*<TouchableNativeFeedback
         onPress={() => setModalVisible(true)}
       >
@@ -31,10 +33,13 @@ import * as Animatable from "react-native-animatable";
           <Text style={h3}>{title}</Text>
         </Animatable.View>
       </TouchableNativeFeedback>*/
-const RecipeCard = ({ recipe, H }) => {
+
+const RecipeCard = observer(({ recipe, H, fromFavourites }) => {
+
   const [modalVisible, setModalVisible] = useState(false);
-  //console.log(recipe)
-  return (
+  const model = useContext(RecipesContext);
+
+  return ( recipe && 
     <View style={styles.centeredView}>
       <Modal
         animationType="slide"
@@ -56,15 +61,19 @@ const RecipeCard = ({ recipe, H }) => {
                 color={c.orange}
                 onPress={() => setModalVisible(!modalVisible)}
               />
-              <Icon
-                raised
-                containerStyle={{ backgroundColor: c.graybg }}
-                style={{ ...styles.icon, justifyContent: 'end' }}
-                underlayColor={c.gray2}
-                name="favorite"
-                color={c.orange}
-                onPress={() => console.log('add to fav')}
-              />
+              {!fromFavourites &&
+                <Icon
+                  raised
+                  containerStyle={{ backgroundColor: c.graybg }}
+                  style={{ ...styles.icon, justifyContent: 'end' }}
+                  underlayColor={c.gray2}
+                  name="favorite"
+                  color={c.orange}
+                  onPress={() => {
+                    model.saveInFavourites(recipe);
+                  }}
+                />
+              }
             </View>
             <Image
               source={{ uri: recipe.image }}
@@ -78,15 +87,13 @@ const RecipeCard = ({ recipe, H }) => {
             />
             <Text style={styles.modalText}>{recipe.label}</Text>
             <View>
-
             <Text>INGREDIENTS</Text>
-            {recipe.ingredientLines.map((i, index) => <Text key={index}>{i}</Text>)}
-</View>
+              {recipe.ingredientLines.map((i, index) => <Text key={index}>{i}</Text>)}
+            </View>
             <View>
               <Text>DIRECTIONS</Text>
               {recipe.ingredientLines.map((i, index) => <Text key={index}>{i}</Text>)}
             </View>
-
           </View>
         </View>
       </Modal>
@@ -108,20 +115,9 @@ const RecipeCard = ({ recipe, H }) => {
           <Text style={h3}>{recipe.label}</Text>
         </Animatable.View>
       </TouchableNativeFeedback>
-
-
     </View>
   );
-};
-/*  <Button
-                style={{ ...styles.openButton, flex: 1 }}
-                onPress={() => {
-                  console.log('anadido a favoritos')
-                }}
-              >
-                <Text style={styles.textStyle}>Favoritos</Text>
-              </Button>
-              */
+});
 
 export default RecipeCard;
 

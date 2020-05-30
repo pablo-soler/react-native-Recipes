@@ -2,18 +2,21 @@ import React from "react";
 import RecipeCard from "./RecipeCard";
 import { ScrollView, View } from "react-native";
 
-const RecipeList = ({recipes}) => {
+const RecipeList = (props) => {
   let recipes1 = [];
   let recipes2 = [];
   let h1 = 0;
   let h2 = 0;
 
-  recipes.map(( (r, i) => {
+  if(props.fromFavourites) console.log(props.recipes);
+  
+  props.recipes.map(( (r, i) => {
     let H = 100 + 40 * Math.floor(Math.random() * 3);
     if (h1 <= h2) {
       h1 += H;
       recipes1.push(
         <RecipeCard
+          fromFavourites={props.fromFavourites}
           key={i}
           recipe={r.recipe}
           H={H}
@@ -24,6 +27,7 @@ const RecipeList = ({recipes}) => {
       h2 += H;
       recipes2.push(
         <RecipeCard
+          fromFavourites={props.fromFavourites}
           key={i}
           recipe={r.recipe}
           H={H}

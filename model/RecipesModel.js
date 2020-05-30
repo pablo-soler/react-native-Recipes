@@ -1,19 +1,33 @@
 import { observable, action } from "mobx";
 import {BASE_URL, APP_ID, APP_KEY} from "../helpers/axiosConfig";
 import React, { createContext } from "react";
+import axios from "axios";
 
 class RecipesModel {
     @observable recipes = [];
+    @observable favourites = [];
+    @observable ingredients = [];
+
+    @observable loading = false;
 
     @action getRecipies = (query) => {
+        this.loading = true;
+
         axios.get(`${BASE_URL}/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`)
-          .then(function (res) {
-            recipes = res.data.hits;
+          .then( (res) => {
+            this.recipes = res.data.hits;
+            this.loading = false;
           })
-          .catch(function (error) {
+          .catch( (error) => {
             console.log(error);
+            this.loading = false;
           })
-      }
+      };
+
+      @action saveInFavourites = (recipe) => this.favourites.push(recipe);
+
+      @action saveIngredients = (ingredient) => this.ingredients.push(ingredient);
+
 }
 
 const model = new RecipesModel();

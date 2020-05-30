@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {BASE_URL, APP_ID, APP_KEY} from "../helpers/axiosConfig";
 import {
   View,
@@ -11,17 +11,30 @@ import { c, p1, h1 } from "../StylesColors.js";
 import RecipeList from "../components/RecipeList.js";
 import * as Animatable from "react-native-animatable";
 import axios from "axios";
+import { RecipesContext } from "../model/RecipesModel.js";
+import { ActivityIndicator } from "react-native-paper";
+import { observer } from "mobx-react";
 
 //Ejemplo consulta:
 //https://api.edamam.com/search?q=null&app_id=40bcce87&app_key=0077e7f685cd2a845ce597a0927a7e40&from=0&to=2
 
-const SearchPage = ({ navigation }) => {
+const SearchPage = observer(() => {
 
   const [query, setQuery] = useState();
   const [queriesList, setQueriesList] = useState([]);
   const [recipes, setRecipies] = useState([]);
 
-  const getRecipies = (query) => {
+  const model = useContext(RecipesContext);
+
+  /*if(model.recipes === null) {
+    return ( 
+      <View>
+      <ActivityIndicator size="large" />
+    </View>
+    )
+  }*/
+
+  /*const getRecipies = (query) => {
     axios.get(`${BASE_URL}/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`)
       .then(function (res) {
         setRecipies(res.data.hits);
@@ -29,7 +42,7 @@ const SearchPage = ({ navigation }) => {
       .catch(function (error) {
         console.log(error);
       })
-  }
+  }*/
 
   const addQuerytoList = () => {
     if (query) {
@@ -38,7 +51,7 @@ const SearchPage = ({ navigation }) => {
       setQueriesList(currentQueriesList);
     }
 
-    getRecipies(query.toLowerCase());
+    model.getRecipies(query.toLowerCase());
     setQuery("");
   };
 
@@ -105,11 +118,15 @@ const SearchPage = ({ navigation }) => {
       </View>
 
       <View style={styles.recipesContainer}>
-        <RecipeList recipes={recipes} />
+        {model.loading ? 
+          <ActivityIndicator />
+          : 
+          <RecipeList recipes={model.recipes} />
+        }        
       </View>
     </KeyboardAvoidingView>
   );
-};
+});
 
 export default SearchPage;
 
