@@ -34,10 +34,12 @@ import { observer } from "mobx-react";
         </Animatable.View>
       </TouchableNativeFeedback>*/
 
-const RecipeCard = observer(({ recipe, H, fromFavourites }) => {
+const RecipeCard = observer(({ item, H, fromFavourites }) => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const model = useContext(RecipesContext);
+
+  const recipe = item.recipe;
 
   return ( recipe && 
     <View style={styles.centeredView}>
@@ -61,19 +63,18 @@ const RecipeCard = observer(({ recipe, H, fromFavourites }) => {
                 color={c.orange}
                 onPress={() => setModalVisible(!modalVisible)}
               />
-              {!fromFavourites &&
                 <Icon
                   raised
                   containerStyle={{ backgroundColor: c.graybg }}
                   style={{ ...styles.icon, justifyContent: 'end' }}
                   underlayColor={c.gray2}
-                  name="favorite"
+                  name={item.favourite ? "favorite" : "favorite-border"}
                   color={c.orange}
                   onPress={() => {
-                    model.saveInFavourites(recipe);
+                    item.favourite = !item.favourite;
+                    fromFavourites && setModalVisible(false);
                   }}
                 />
-              }
             </View>
             <Image
               source={{ uri: recipe.image }}

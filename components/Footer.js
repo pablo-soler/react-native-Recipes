@@ -46,7 +46,7 @@ const Footer = () => {
         options={{
           tabBarLabel: "GUARDADAS",
           tabBarIcon: ({ color }) => (
-            <Icon name="favorite" color={color} size={26} />
+            <Icon name="favorite-border" color={color} size={26} />
           ),
         }}
       />

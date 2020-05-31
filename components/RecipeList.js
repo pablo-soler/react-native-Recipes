@@ -7,8 +7,6 @@ const RecipeList = (props) => {
   let recipes2 = [];
   let h1 = 0;
   let h2 = 0;
-
-  if(props.fromFavourites) console.log(props.recipes);
   
   props.recipes.map(( (r, i) => {
     let H = 100 + 40 * Math.floor(Math.random() * 3);
@@ -18,7 +16,7 @@ const RecipeList = (props) => {
         <RecipeCard
           fromFavourites={props.fromFavourites}
           key={i}
-          recipe={r.recipe}
+          item={r}
           H={H}
           styles={{ flexGrow: H }}
         />
@@ -29,7 +27,7 @@ const RecipeList = (props) => {
         <RecipeCard
           fromFavourites={props.fromFavourites}
           key={i}
-          recipe={r.recipe}
+          item={r}
           H={H}
           styles={{ flexGrow: H }}
         />

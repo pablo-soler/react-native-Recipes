@@ -1,11 +1,10 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 import {BASE_URL, APP_ID, APP_KEY} from "../helpers/axiosConfig";
 import React, { createContext } from "react";
 import axios from "axios";
 
 class RecipesModel {
     @observable recipes = [];
-    @observable favourites = [];
     @observable ingredients = [];
 
     @observable loading = false;
@@ -24,7 +23,10 @@ class RecipesModel {
           })
       };
 
-      @action saveInFavourites = (recipe) => this.favourites.push(recipe);
+      @computed get favourites () {
+        let favs = [...this.recipes.filter( r => r.favourite)];
+        return favs;
+      };
 
       @action saveIngredients = (ingredient) => this.ingredients.push(ingredient);
 
