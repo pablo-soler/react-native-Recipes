@@ -1,8 +1,9 @@
 import React from "react";
 import RecipeCard from "./RecipeCard";
 import { ScrollView, View } from "react-native";
+import { observer } from "mobx-react";
 
-const RecipeList = (props) => {
+const RecipeList = observer((props) => {
   let recipes1 = [];
   let recipes2 = [];
   let h1 = 0;
@@ -47,6 +48,6 @@ const RecipeList = (props) => {
       <View>{recipes2}</View>
     </ScrollView>
   );
-};
+});
 
 export default RecipeList;

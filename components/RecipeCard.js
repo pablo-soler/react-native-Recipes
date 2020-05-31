@@ -72,6 +72,7 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                   color={c.orange}
                   onPress={() => {
                     item.favourite = !item.favourite;
+                    model.saveInFavourites(item, item.favourite);
                     fromFavourites && setModalVisible(false);
                   }}
                 />

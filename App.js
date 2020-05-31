@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import { View, ActivityIndicator } from "react-native";
 import { useFonts } from "@use-expo/font";
 import { RecipesProvider } from './model/RecipesModel';
+import 'mobx-react-lite/batchingForReactNative';
 
 const App = () => {
   const [fontsLoaded] = useFonts({

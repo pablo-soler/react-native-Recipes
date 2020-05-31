@@ -5,6 +5,7 @@ import axios from "axios";
 
 class RecipesModel {
     @observable recipes = [];
+    @observable favourites = [];
     @observable ingredients = [];
 
     @observable loading = false;
@@ -23,13 +24,10 @@ class RecipesModel {
           })
       };
 
-      @computed get favourites () {
-        let favs = [...this.recipes.filter( r => r.favourite)];
-        return favs;
+      @action saveInFavourites (recipe, add){
+        if(add) this.favourites.push(recipe);
+        else this.favourites.remove(recipe);
       };
-
-      @action saveIngredients = (ingredient) => this.ingredients.push(ingredient);
-
 }
 
 const model = new RecipesModel();
