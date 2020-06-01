@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import {BASE_URL, APP_ID, APP_KEY} from "../helpers/axiosConfig";
+import { BASE_URL, APP_ID, APP_KEY } from "../helpers/axiosConfig";
 import {
   View,
   TextInput,
@@ -19,7 +19,6 @@ import { observer } from "mobx-react";
 //https://api.edamam.com/search?q=null&app_id=40bcce87&app_key=0077e7f685cd2a845ce597a0927a7e40&from=0&to=2
 
 const SearchPage = observer(() => {
-
   const [query, setQuery] = useState();
   const [queriesList, setQueriesList] = useState([]);
   const [recipes, setRecipies] = useState([]);
@@ -117,12 +116,12 @@ const SearchPage = observer(() => {
         ))}
       </View>
 
-      <View style={styles.recipesContainer}>
-        {model.loading ? 
-          <ActivityIndicator />
-          : 
+      <View>
+        {model.loading ? (
+          <ActivityIndicator style={{marginTop: 40 }}  size="large" color={c.orange} />
+        ) : (
           <RecipeList recipes={model.recipes} />
-        }        
+        )}
       </View>
     </KeyboardAvoidingView>
   );
@@ -137,6 +136,7 @@ const styles = {
     paddingRight: 25,
     marginTop: 20,
   },
+
   inputContainer: {
     flex: 1,
     flexDirection: "column",

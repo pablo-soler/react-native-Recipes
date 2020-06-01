@@ -14,6 +14,11 @@ export const h3 = {
   fontSize: 16,
   color: c.gray4,
 };
+export const h2 = {
+  fontFamily: "Montserrat-ExtraBold",
+  fontSize: 32,
+  color: c.gray4,
+};
 
 export const h1 = {
   //titulo montserrat Light 24
@@ -23,9 +28,14 @@ export const h1 = {
 };
 
 export const h4 = {
-  //titulo montserrat Light 24
   fontFamily: "Montserrat-Light",
   fontSize: 15,
+  color: c.gray4,
+};
+
+export const h5 = {
+  fontFamily: "Montserrat-Light",
+  fontSize: 20,
   color: c.gray4,
 };
 
