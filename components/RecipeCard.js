@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
-import { c, h3 } from "../StylesColors.js";
+import { c, h3, p2 } from "../StylesColors.js";
 import {
   Text,
   View,
@@ -15,24 +15,6 @@ import * as Animatable from "react-native-animatable";
 import { Icon } from "react-native-elements";
 import { RecipesContext } from "../model/RecipesModel.js";
 import { observer } from "mobx-react";
-
-/*<TouchableNativeFeedback
-        onPress={() => setModalVisible(true)}
-      >
-        <Animatable.View style={styles.card} animation="fadeInDown">
-          <Image
-            source={{ uri: image }}
-            style={{
-              height: H,
-              resizeMode: "cover",
-              margin: 2,
-              width: W - pd * 2,
-              borderRadius: radius - 5,
-            }}
-          />
-          <Text style={h3}>{title}</Text>
-        </Animatable.View>
-      </TouchableNativeFeedback>*/
 
 const RecipeCard = observer(({ item, H, fromFavourites }) => {
 
@@ -89,12 +71,27 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
             />
             <Text style={styles.modalText}>{recipe.label}</Text>
             <View>
-            <Text>INGREDIENTS</Text>
-              {recipe.ingredientLines.map((i, index) => <Text key={index}>{i}</Text>)}
-            </View>
-            <View>
-              <Text>DIRECTIONS</Text>
-              {recipe.ingredientLines.map((i, index) => <Text key={index}>{i}</Text>)}
+              <Text>INGREDIENTS</Text>
+                {recipe.ingredientLines.map((i, index) => ( 
+                <>
+                  <TouchableNativeFeedback
+                    key={index}
+                    onPress={() => {
+                      model.saveIngredients(i, true);
+                    }}
+                  >
+                    <Animatable.View style={styles.capsule} animation="fadeIn">
+                      <Icon
+                        name="add"
+                        color={c.gray2}
+                        size={20}
+                        style={{ marginRight: 8 }}
+                      />
+                      <Text style={p2}>{i}</Text>
+                    </Animatable.View>
+                  </TouchableNativeFeedback>
+                </>
+                ))}
             </View>
           </View>
         </View>
@@ -184,5 +181,16 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     fontSize: 18,
     flex: 1,
+  },
+  capsule: {
+    marginLeft: 8,
+    marginTop: 8,
+    backgroundColor: c.graybg,
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 20,
+    elevation: 5,
+    borderRadius: 50,
+    flexDirection: "row",
   },
 });

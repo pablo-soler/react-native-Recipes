@@ -1,38 +1,23 @@
-import React, { useState, Children } from "react";
+import React, { useState, Children, useContext } from "react";
 import { View, ScrollView, Text, TouchableNativeFeedback } from "react-native";
 import { c, h1, p2 } from "../StylesColors.js";
 import * as Animatable from "react-native-animatable";
 import Icon from "react-native-vector-icons/AntDesign";
-const IngredientsPage = ({ navigation }) => {
-  const [list, setList] = useState([
-    { amount: "4", title: "huevos", id: "1" },
-    { amount: null, title: "leche", id: "2" },
-    { amount: "200g", title: "bacon", id: "3" },
-    { amount: null, title: "zumo de naranja", id: "4" },
-    { amount: "100ml", title: "nata para cocinar", id: "5" },
-  ]);
+import { RecipesContext } from "../model/RecipesModel.js";
+import { observer } from "mobx-react";
+
+const IngredientsPage = observer(() => {
+
+  const model = useContext(RecipesContext);
 
   const [deletedList, setDeletedList] = useState([]);
 
-  const deleteIngredient = (index) => {
+  const deleteIngredient = (ingredient) => {
     let currentDeletedList = [...deletedList];
-    currentDeletedList.push(list[index]);
+    currentDeletedList.push(ingredient);
     setDeletedList(currentDeletedList);
-
-    let currentList = [...list];
-    currentList.splice(index, 1);
-    setList(currentList);
   };
 
-  const addIngredient = (index) => {
-    let currentDeletedList = [...deletedList];
-    currentDeletedList.splice(index, 1);
-    setDeletedList(currentDeletedList);
-
-    let currentList = [...list];
-    currentList.push(deletedList[index]);
-    setList(currentList);
-  };
 
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
@@ -43,11 +28,12 @@ const IngredientsPage = ({ navigation }) => {
       </View>
       <ScrollView>
         <View style={styles.ingredientsList}>
-          {list.map((ingredient, index) => (
+          {model.ingredients.map((ingredient, index) => (
             <TouchableNativeFeedback
               key={index}
               onPress={() => {
-                deleteIngredient(index);
+                model.saveIngredients(ingredient);
+                deleteIngredient(ingredient);
               }}
             >
               <Animatable.View style={styles.capsule} animation="fadeIn">
@@ -57,10 +43,7 @@ const IngredientsPage = ({ navigation }) => {
                   size={20}
                   style={{ marginRight: 8 }}
                 />
-                {ingredient.amount && (
-                  <Text style={p2}>{ingredient.amount} </Text>
-                )}
-                <Text style={p2}>{ingredient.title}</Text>
+                <Text style={p2}>{ingredient}</Text>
               </Animatable.View>
             </TouchableNativeFeedback>
           ))}
@@ -93,7 +76,8 @@ const IngredientsPage = ({ navigation }) => {
               <TouchableNativeFeedback
                 key={index}
                 onPress={() => {
-                  addIngredient(index);
+                  model.saveIngredients(ingredient, true);
+                  deletedList.splice(index, 1);
                 }}
               >
                 <View style={styles.ingredient}>
@@ -103,19 +87,6 @@ const IngredientsPage = ({ navigation }) => {
                     size={20}
                     style={{ marginRight: 10 }}
                   />
-                  {ingredient.amount && (
-                    <Text
-                      style={{
-                        color: c.gray2,
-                        textDecorationLine: "line-through",
-                        textDecorationStyle: "solid",
-                        fontFamily: "Montserrat-Regular",
-                        fontSize: 14,
-                      }}
-                    >
-                      {ingredient.amount}{" "}
-                    </Text>
-                  )}
                   <Text
                     style={{
                       color: c.gray2,
@@ -125,7 +96,7 @@ const IngredientsPage = ({ navigation }) => {
                         fontSize: 14,
                     }}
                   >
-                    {ingredient.title}
+                    {ingredient}
                   </Text>
                 </View>
               </TouchableNativeFeedback>
@@ -135,7 +106,7 @@ const IngredientsPage = ({ navigation }) => {
       </ScrollView>
     </View>
   );
-};
+});
 
 /*
 {list.map((ingredient, index) => ( 

@@ -9,14 +9,14 @@ const RecipeList = observer((props) => {
   let h1 = 0;
   let h2 = 0;
   
-  props.recipes.map(( (r, i) => {
+  props.recipes.map(( (r, index) => {
     let H = 100 + 40 * Math.floor(Math.random() * 3);
     if (h1 <= h2) {
       h1 += H;
       recipes1.push(
         <RecipeCard
           fromFavourites={props.fromFavourites}
-          key={i}
+          key={index}
           item={r}
           H={H}
           styles={{ flexGrow: H }}
@@ -27,7 +27,7 @@ const RecipeList = observer((props) => {
       recipes2.push(
         <RecipeCard
           fromFavourites={props.fromFavourites}
-          key={i}
+          key={index}
           item={r}
           H={H}
           styles={{ flexGrow: H }}

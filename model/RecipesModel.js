@@ -17,6 +17,8 @@ class RecipesModel {
           .then( (res) => {
             this.recipes = res.data.hits;
             this.loading = false;
+            console.log(res.data.hits[0].directions)
+
           })
           .catch( (error) => {
             console.log(error);
@@ -27,6 +29,11 @@ class RecipesModel {
       @action saveInFavourites (recipe, add){
         if(add) this.favourites.push(recipe);
         else this.favourites.remove(recipe);
+      };
+
+      @action saveIngredients (ingredient, add){
+        if(add) this.ingredients.push(ingredient);
+        else this.ingredients.remove(ingredient);
       };
 }
 
