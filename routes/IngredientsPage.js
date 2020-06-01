@@ -7,7 +7,6 @@ import { RecipesContext } from "../model/RecipesModel.js";
 import { observer } from "mobx-react";
 
 const IngredientsPage = observer(() => {
-
   const model = useContext(RecipesContext);
 
   const [deletedList, setDeletedList] = useState([]);
@@ -17,7 +16,6 @@ const IngredientsPage = observer(() => {
     currentDeletedList.push(ingredient);
     setDeletedList(currentDeletedList);
   };
-
 
   return (
     <View style={{ flex: 1, justifyContent: "flex-start" }}>
@@ -93,7 +91,7 @@ const IngredientsPage = observer(() => {
                       textDecorationLine: "line-through",
                       textDecorationStyle: "solid",
                       fontFamily: "Montserrat-Regular",
-                        fontSize: 14,
+                      fontSize: 14,
                     }}
                   >
                     {ingredient}
