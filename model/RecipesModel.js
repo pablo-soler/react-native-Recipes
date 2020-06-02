@@ -17,7 +17,7 @@ class RecipesModel {
           .then( (res) => {
             this.recipes = res.data.hits;
             this.loading = false;
-            console.log(res.data.hits[0].directions)
+            console.log(res.data.hits[0])
 
           })
           .catch( (error) => {
@@ -32,7 +32,7 @@ class RecipesModel {
       };
 
       @action saveIngredients (ingredient, add){
-        if(add) this.ingredients.push(ingredient);
+        if(add && !this.ingredients.find( i => i === ingredient)) this.ingredients.push(ingredient);
         else this.ingredients.remove(ingredient);
       };
 }

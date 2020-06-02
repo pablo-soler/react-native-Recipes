@@ -19,10 +19,8 @@ const RecipeList = observer((props) => {
           key={index}
           item={r}
           H={H}
-          
         />
       );
-     
     } else {
       h2 += H;
       recipes2.push(
@@ -38,11 +36,11 @@ const RecipeList = observer((props) => {
     if(index == props.recipes.length-1){
         if(h1<h2){
         recipes1.push(
-          <View style={{paddingBottom: h2-h1,}}></View>
+          <View key={index} style={{paddingBottom: h2-h1,}}></View>
         );
       }else if(h2<h1){
         recipes2.push(
-          <View style={{paddingBottom: h1-h2,}}></View>
+          <View key={index} style={{paddingBottom: h1-h2,}}></View>
         );
       }
       }

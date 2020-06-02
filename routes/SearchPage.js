@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableNativeFeedback,
   KeyboardAvoidingView,
+  Keyboard
 } from "react-native";
 import { Icon, Badge } from "react-native-elements";
 import { c, p1, h1 } from "../StylesColors.js";
@@ -21,27 +22,8 @@ import { observer } from "mobx-react";
 const SearchPage = observer(() => {
   const [query, setQuery] = useState();
   const [queriesList, setQueriesList] = useState([]);
-  const [recipes, setRecipies] = useState([]);
 
   const model = useContext(RecipesContext);
-
-  /*if(model.recipes === null) {
-    return ( 
-      <View>
-      <ActivityIndicator size="large" />
-    </View>
-    )
-  }*/
-
-  /*const getRecipies = (query) => {
-    axios.get(`${BASE_URL}/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`)
-      .then(function (res) {
-        setRecipies(res.data.hits);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-  }*/
 
   const addQuerytoList = () => {
     if (query) {
@@ -52,6 +34,7 @@ const SearchPage = observer(() => {
 
     model.getRecipies(query.toLowerCase());
     setQuery("");
+    Keyboard.dismiss();
   };
 
   const deleteIngredient = (index) => {
@@ -117,11 +100,16 @@ const SearchPage = observer(() => {
       </View>
 
       <View>
-        {model.loading ? (
-          <ActivityIndicator style={{marginTop: 40 }}  size="large" color={c.orange} />
-        ) : (
-          <RecipeList recipes={model.recipes} />
-        )}
+        {queriesList.length > 0 ?
+          model.loading ? 
+            <ActivityIndicator style={{marginTop: 40 }}  size="large" color={c.orange} />
+           : 
+            <RecipeList recipes={model.recipes} />
+          
+        :
+          <View></View>
+      }
+        
       </View>
     </KeyboardAvoidingView>
   );

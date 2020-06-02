@@ -74,23 +74,22 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                 <Text style={h2}>{recipe.label}</Text>
                 <View style={{marginTop: 18}}>
                   <Text style={h5}>INGREDIENTES</Text>
-                  <View style={styles.ingredientsList}>
-                    {recipe.ingredientLines.map((i, index) => (
-                      <>
+                    {recipe.ingredientLines.map((i, index) => {
+                      let exists = model.ingredients.find(savedIngredient => savedIngredient === i);
+                      return (
+                      <View style={styles.ingredientsList}>
                         <TouchableNativeFeedback
                           key={index}
                           onPress={() => {
                             model.saveIngredients(i, true);
                           }}
-                          //aqui estaria bien tener un estilo si clicas el ingrediente
-                          // style={ saved ? styles.buttonPress : styles.button}
                         >
                           <Animatable.View
-                            style={styles.capsule}
+                            style={exists ? styles.selectedCapsule : styles.capsule}
                             animation="fadeIn"
                           >
                             <Icon
-                              name="add"
+                              name={exists ? "remove": "add"}
                               color={c.gray2}
                               size={20}
                               style={{ marginRight: 8 }}
@@ -98,9 +97,11 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                             <Text style={p2}>{i}</Text>
                           </Animatable.View>
                         </TouchableNativeFeedback>
-                      </>
-                    ))}
-                  </View>
+                        </View>
+                    )
+                        }
+                    )}
+                  
                 </View>
                 <View style={{marginTop: 18}}>
                   <Text style={h5}>INSTRUCCIONES???</Text>
@@ -202,7 +203,19 @@ const styles = StyleSheet.create({
   ingredientsList: {
     flexWrap: "wrap",
     flexDirection: "row",
-    marginBottom: 15,
+    marginBottom: 10,
     width: wp("64%"),
+  },
+  selectedCapsule: {
+    marginLeft: 4,
+    marginRight: 4,
+    marginTop: 8,
+    backgroundColor: c.graybg,
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 15,
+    elevation: 1,
+    borderRadius: 50,
+    flexDirection: "row",
   },
 });
