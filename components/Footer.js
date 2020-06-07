@@ -5,7 +5,6 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import SearchPage from "../routes/SearchPage";
 import FavoritesPage from "../routes/FavoritesPage";
 import IngredientsPage from "../routes/IngredientsPage";
-import RecipePage from "../routes/RecipePage";
 import {c} from "../StylesColors.js";
 
 const Footer = () => {

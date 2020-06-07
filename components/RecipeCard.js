@@ -74,7 +74,7 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                   <Text style={[h5, { marginBottom: 10 }]}>INGREDIENTES</Text>
                   {recipe.ingredientLines.map((ingredient, index) => {
                     let exists = model.ingredients.find(
-                      (savedIngredient) => savedIngredient === i
+                      (savedIngredient) => savedIngredient === ingredient
                     );
                     return (
                       <View key={index} style={styles.list}>
