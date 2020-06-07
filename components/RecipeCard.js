@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
-import { c, h3, p2, h5, h2 } from "../StylesColors.js";
+import { c, h3, p2, h5, h2, h6 } from "../StylesColors.js";
 import {
   Text,
   View,
@@ -9,8 +9,9 @@ import {
   TouchableNativeFeedback,
   Alert,
   Modal,
+  Button,
   ScrollView,
-  Linking
+  Linking,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Icon } from "react-native-elements";
@@ -57,7 +58,7 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                   }}
                 />
               </View>
-              <ScrollView>
+              <ScrollView showsVerticalScrollIndicator={false}>
                 <Image
                   source={{ uri: recipe.image }}
                   style={{
@@ -69,11 +70,13 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                   }}
                 />
                 <Text style={h2}>{recipe.label}</Text>
-                <View style={{marginTop: 18}}>
-                  <Text style={h5}>INGREDIENTES</Text>
-                    {recipe.ingredientLines.map((ingredient, index) => {
-                      let exists = model.ingredients.find(savedIngredient => savedIngredient === i);
-                      return (
+                <View style={{ marginTop: 18 }}>
+                  <Text style={[h5, { marginBottom: 10 }]}>INGREDIENTES</Text>
+                  {recipe.ingredientLines.map((ingredient, index) => {
+                    let exists = model.ingredients.find(
+                      (savedIngredient) => savedIngredient === i
+                    );
+                    return (
                       <View key={index} style={styles.list}>
                         <TouchableNativeFeedback
                           onPress={() => {
@@ -81,11 +84,15 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                           }}
                         >
                           <Animatable.View
-                            style={exists ? styles.selectedCapsule : styles.capsule}
+                            style={
+                              exists
+                                ? [styles.capsule, styles.selectedCapsule]
+                                : [styles.capsule, styles.capsuleView]
+                            }
                             animation="fadeIn"
                           >
                             <Icon
-                              name={exists ? "remove": "add"}
+                              name={exists ? "remove" : "add"}
                               color={c.gray2}
                               size={20}
                               style={{ marginRight: 8 }}
@@ -93,23 +100,44 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                             <Text style={p2}>{ingredient}</Text>
                           </Animatable.View>
                         </TouchableNativeFeedback>
-                        </View>
-                      )
-                    })}
+                      </View>
+                    );
+                  })}
                 </View>
-                <View style={{marginTop: 18}}>
-                  <Text style={h5}>INSTRUCCIONES</Text>
-                  <Text style={styles.url} onPress={ ()=> Linking.openURL(recipe.url) }>{recipe.url}</Text>
-                  <View style={{marginTop: 18}}>
+                <View style={{ marginTop: 18 }}>
+                  <View >
                     <Text style={h5}>ETIQUETAS</Text>
                     <View style={styles.list}>
-                      {recipe.healthLabels.map( (label, index) => (
-                        <Text key={index} style={styles.healthLabel}>{label}</Text>
+                      {recipe.healthLabels.map((label, index) => (
+                        <Text
+                          key={index}
+                          style={[styles.capsule, styles.healthLabel, p2]}
+                        >
+                          {label}
+                        </Text>
                       ))}
-                      {recipe.cautions.map( (label, index) => (
-                        <Text key={index} style={styles.cautionLabel}>{label}</Text>
+                      {recipe.cautions.map((label, index) => (
+                        <Text
+                          key={index}
+                          style={[styles.capsule, styles.cautionLabel, p2]}
+                        >
+                          {label}
+                        </Text>
                       ))}
                     </View>
+                  </View>
+                  <View
+                    style={[h5, styles.url]}
+                    onPress={() => Linking.openURL(recipe.url)}
+                  >
+                    <Icon
+                      name="link"
+                      color={c.orange}
+                      size={25}
+                    />
+                    <Text style={[h6, {marginLeft: 10, color: c.orange,}]}>
+                      INSTRUCCIONES
+                    </Text>
                   </View>
                 </View>
               </ScrollView>
@@ -198,10 +226,24 @@ const styles = StyleSheet.create({
     backgroundColor: c.graybg,
     padding: 5,
     paddingLeft: 10,
-    paddingRight: 15,
+    paddingRight: 18,
     elevation: 5,
     borderRadius: 50,
     flexDirection: "row",
+  },
+  capsuleView: {
+    marginTop: 1,
+  },
+  selectedCapsule: {
+    elevation: 1,
+  },
+  healthLabel: {
+    backgroundColor: c.green,
+    elevation: 1,
+  },
+  cautionLabel: {
+    backgroundColor: c.red,
+    elevation: 1,
   },
   list: {
     flexWrap: "wrap",
@@ -209,44 +251,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: wp("64%"),
   },
-  selectedCapsule: {
-    marginLeft: 4,
-    marginRight: 4,
-    marginTop: 8,
-    backgroundColor: c.graybg,
-    padding: 5,
-    paddingLeft: 10,
-    paddingRight: 15,
-    elevation: 1,
-    borderRadius: 50,
-    flexDirection: "row",
-  },
+
   url: {
-    paddingTop: 10,
-    color: c.gray3
-  },
-  healthLabel: {
-    marginLeft: 4,
-    marginRight: 4,
-    marginTop: 8,
-    backgroundColor: c.green,
-    padding: 5,
-    paddingLeft: 10,
-    paddingRight: 15,
+    backgroundColor: c.graybg,
+    paddingLeft: 17,
     elevation: 5,
-    borderRadius: 50,
+    height:50,
+    borderRadius: 30,
+    borderColor: c.orange,
+    borderWidth: 2,
     flexDirection: "row",
-  },
-  cautionLabel: {
-    marginLeft: 4,
-    marginRight: 4,
-    marginTop: 8,
-    backgroundColor: c.red,
-    padding: 5,
-    paddingLeft: 10,
-    paddingRight: 15,
-    elevation: 5,
-    borderRadius: 50,
-    flexDirection: "row",
+    alignContent: 'center',
+    alignItems: 'center',
+    marginTop: 18,
+    marginBottom: 20,
+    margin: 15
   },
 });
