@@ -1,23 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
-import { BASE_URL, APP_ID, APP_KEY } from "../helpers/axiosConfig";
+import React, { useState, useContext } from "react";
 import {
   View,
   TextInput,
   TouchableNativeFeedback,
   KeyboardAvoidingView,
-  Keyboard
+  Keyboard,
+  Image
 } from "react-native";
 import { Icon, Badge } from "react-native-elements";
 import { c, p1, h1 } from "../StylesColors.js";
 import RecipeList from "../components/RecipeList.js";
 import * as Animatable from "react-native-animatable";
-import axios from "axios";
 import { RecipesContext } from "../model/RecipesModel.js";
 import { ActivityIndicator } from "react-native-paper";
 import { observer } from "mobx-react";
-
-//Ejemplo consulta:
-//https://api.edamam.com/search?q=null&app_id=40bcce87&app_key=0077e7f685cd2a845ce597a0927a7e40&from=0&to=2
 
 const SearchPage = observer(() => {
   const [query, setQuery] = useState();
@@ -61,7 +57,6 @@ const SearchPage = observer(() => {
             value={query}
           />
         </View>
-
         <Icon
           raised
           containerStyle={{ backgroundColor: c.graybg }}
@@ -108,8 +103,7 @@ const SearchPage = observer(() => {
           
         :
           <View></View>
-      }
-        
+        }
       </View>
     </KeyboardAvoidingView>
   );

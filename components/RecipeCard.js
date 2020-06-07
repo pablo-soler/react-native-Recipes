@@ -10,7 +10,7 @@ import {
   Alert,
   Modal,
   ScrollView,
-  TouchableHighlight,
+  Linking
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Icon } from "react-native-elements";
@@ -34,9 +34,6 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
             Alert.alert("Modal has been closed.");
           }}
         >
-          {/* este view podría ser un Touchable para volver atrás lo malo es que al estar de fondo 
-        parece que tocando en cualquier lado del modal se acciona 
-        --> onPress={() => setModalVisible(!modalVisible)} */}
           <View style={(styles.centeredView, styles.modalBg)}>
             <View style={styles.modalView}>
               <View style={styles.topButtons}>
@@ -74,13 +71,13 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                 <Text style={h2}>{recipe.label}</Text>
                 <View style={{marginTop: 18}}>
                   <Text style={h5}>INGREDIENTES</Text>
-                    {recipe.ingredientLines.map((i, index) => {
+                    {recipe.ingredientLines.map((ingredient, index) => {
                       let exists = model.ingredients.find(savedIngredient => savedIngredient === i);
                       return (
-                      <View key={index} style={styles.ingredientsList}>
+                      <View key={index} style={styles.list}>
                         <TouchableNativeFeedback
                           onPress={() => {
-                            model.saveIngredients(i, true);
+                            model.saveIngredients(ingredient, true);
                           }}
                         >
                           <Animatable.View
@@ -93,24 +90,32 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                               size={20}
                               style={{ marginRight: 8 }}
                             />
-                            <Text style={p2}>{i}</Text>
+                            <Text style={p2}>{ingredient}</Text>
                           </Animatable.View>
                         </TouchableNativeFeedback>
                         </View>
-                    )
-                        }
-                    )}
-                  
+                      )
+                    })}
                 </View>
                 <View style={{marginTop: 18}}>
-                  <Text style={h5}>INSTRUCCIONES???</Text>
-
+                  <Text style={h5}>INSTRUCCIONES</Text>
+                  <Text style={styles.url} onPress={ ()=> Linking.openURL(recipe.url) }>{recipe.url}</Text>
+                  <View style={{marginTop: 18}}>
+                    <Text style={h5}>ETIQUETAS</Text>
+                    <View style={styles.list}>
+                      {recipe.healthLabels.map( (label, index) => (
+                        <Text key={index} style={styles.healthLabel}>{label}</Text>
+                      ))}
+                      {recipe.cautions.map( (label, index) => (
+                        <Text key={index} style={styles.cautionLabel}>{label}</Text>
+                      ))}
+                    </View>
+                  </View>
                 </View>
               </ScrollView>
             </View>
           </View>
         </Modal>
-
         <TouchableNativeFeedback
           onPress={() => {
             setModalVisible(true);
@@ -159,7 +164,6 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    //justifyContent: "center",
     alignItems: "center",
   },
   topButtons: {
@@ -199,7 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     flexDirection: "row",
   },
-  ingredientsList: {
+  list: {
     flexWrap: "wrap",
     flexDirection: "row",
     marginBottom: 10,
@@ -214,6 +218,34 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 15,
     elevation: 1,
+    borderRadius: 50,
+    flexDirection: "row",
+  },
+  url: {
+    paddingTop: 10,
+    color: c.gray3
+  },
+  healthLabel: {
+    marginLeft: 4,
+    marginRight: 4,
+    marginTop: 8,
+    backgroundColor: c.green,
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 15,
+    elevation: 5,
+    borderRadius: 50,
+    flexDirection: "row",
+  },
+  cautionLabel: {
+    marginLeft: 4,
+    marginRight: 4,
+    marginTop: 8,
+    backgroundColor: c.red,
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 15,
+    elevation: 5,
     borderRadius: 50,
     flexDirection: "row",
   },

@@ -1,6 +1,8 @@
 
 export const c = {
+  green: "#2de27a",
   orange: "#FFC700",
+  red: "#e32020",
   white: "#FFFFFF",
   graybg: "#F0f0f0",
   gray2: "#D0D0D0",
