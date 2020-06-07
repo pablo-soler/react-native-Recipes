@@ -77,9 +77,8 @@ const RecipeCard = observer(({ item, H, fromFavourites }) => {
                     {recipe.ingredientLines.map((i, index) => {
                       let exists = model.ingredients.find(savedIngredient => savedIngredient === i);
                       return (
-                      <View style={styles.ingredientsList}>
+                      <View key={index} style={styles.ingredientsList}>
                         <TouchableNativeFeedback
-                          key={index}
                           onPress={() => {
                             model.saveIngredients(i, true);
                           }}
