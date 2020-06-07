@@ -1,8 +1,8 @@
 
 export const c = {
-  green: "#2de27a",
+  green: "#E1F4D7",
   orange: "#FFC700",
-  red: "#e32020",
+  red: "#F4D7D7",
   white: "#FFFFFF",
   graybg: "#F0f0f0",
   gray2: "#D0D0D0",
@@ -37,6 +37,11 @@ export const h4 = {
 
 export const h5 = {
   fontFamily: "Montserrat-Light",
+  fontSize: 20,
+  color: c.gray4,
+};
+export const h6 = {
+  fontFamily: "Montserrat-Regular",
   fontSize: 20,
   color: c.gray4,
 };
